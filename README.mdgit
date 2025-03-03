@@ -1,0 +1,1 @@
+# projet-soutenace initgit add README.mdgit commit -m first commitgit branch -M maingit remote add origin git@github.com:BenSIDIBE/projet-soutenace.gitgit push -u origin main

@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+i.icon{
+    font-size: 25px;
+    color: #f8ac08e9;
+    position: center;
+}

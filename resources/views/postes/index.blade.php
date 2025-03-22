@@ -53,14 +53,14 @@
                                     @csrf
                                     @method('PUT')
                                     <div class="modal-content">
-                                        <div class="modal-header">
+                                        <div class="modal-header bg-yellow-500 text-white">
                                             <h5 class="modal-title">Modifier le Poste</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="mb-3">
                                                 <label>Nom</label>
-                                                <input type="text" class="form-control" name="nom"
+                                                <input type="text" class="form-control border rounded" name="nom"
                                                     value="{{ $poste->nom }}" required>
                                             </div>
                                             <div class="mb-3">
@@ -69,7 +69,8 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-success">Enregistrer</button>
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                            <button type="submit" class="btn btn-success bg-yellow-500">Enregistrer</button>
                                         </div>
                                     </div>
                                 </form>
@@ -83,15 +84,16 @@
                                     @csrf
                                     @method('DELETE')
                                     <div class="modal-content">
-                                        <div class="modal-header">
+                                        <div class="modal-header bg-red-600 text-white">
                                             <h5 class="modal-title">Confirmer la suppression</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal"></button>
                                         </div>
                                         <div class="modal-body">
                                             Êtes-vous sûr de vouloir supprimer le poste
                                             <strong>{{ $poste->nom }}</strong> ?
                                         </div>
                                         <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                             <button type="submit" class="btn btn-danger">Supprimer</button>
                                         </div>
                                     </div>
@@ -106,20 +108,20 @@
 
     </div>
 
-    <!-- Modal Ajout -->
+    <!-- Modal Ajouter -->
     <div class="modal fade" id="addPosteModal" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog">
             <form action="{{ route('postes.store') }}" method="POST">
                 @csrf
                 <div class="modal-content">
-                    <div class="modal-header">
+                    <div class="modal-header bg-primary text-white">
                         <h5 class="modal-title">Ajouter un Poste</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
                             <label>Nom</label>
-                            <input type="text" class="form-control" name="nom" required>
+                            <input type="text" class="form-control border rounded" name="nom" required>
                         </div>
                         <div class="mb-3">
                             <label>Description</label>
@@ -127,6 +129,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                         <button type="submit" class="btn btn-primary">Ajouter</button>
                     </div>
                 </div>

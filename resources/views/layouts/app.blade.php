@@ -79,7 +79,7 @@
             position: fixed;
             top: 0;
             left: 0;
-            width: 280px;
+            width: 200px;
             height: 100%;
             background: var(--light);
             z-index: 2000;
@@ -179,7 +179,7 @@
         }
 
         #sidebar.hide .side-menu li a {
-            width: calc(48px - (4px * 2));
+            width: calc(40px - (4px * 2));
             transition: width .3s ease;
         }
 
@@ -206,8 +206,8 @@
         /* CONTENT */
         #content {
             position: relative;
-            width: calc(100% - 280px);
-            left: 280px;
+            width: calc(100% - 200px);
+            left: 200px;
             transition: .3s ease;
         }
 
@@ -694,7 +694,6 @@
             }
         }
     </style>
-
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -709,8 +708,8 @@
                 <span class="text">SkyPlan</span>
             </a>
             <ul class="side-menu top">
-                <li class="{{ request()->routeIs('dashboard.index') ? 'active' : '' }}">
-                    <a href="{{ route('dashboard.index') }}">
+                <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                    <a href="{{ route('dashboard') }}">
                         <i class='bx bxs-dashboard'></i>
                         <span class="text">Dashboard</span>
                     </a>
@@ -727,6 +726,40 @@
                         <span class="text">Analytics</span>
                     </a>
                 </li>
+
+<!-- ancien tableau de service -->
+            <!--    <li class="{{ request()->routeIs('tableaux_de_service.index') ? 'active' : '' }}">
+                    <a href="{{ route('tableaux_de_service.index') }}">
+                        <i class='bx bx-calendar'></i>
+                        <span class="text">Tableau de Service</span>
+                    </a>
+                </li>
+            -->
+<!---->
+<!--- nouveau-->
+<li class="{{ request()->routeIs('tableau_service.index') ? 'active' : '' }}">
+    <a href="{{ route('tableau_service.index') }}">
+        <i class='bx bx-calendar'></i>
+        <span class="text">Tableau de Service</span>
+    </a>
+</li>
+<!--service
+<li class="{{ request()->routeIs('services.index') ? 'active' : '' }}">
+    <a href="{{ route('services.index') }}">
+        <i class='bx bx-calendar'></i>
+        <span class="text">Services</span>
+    </a>
+</li>
+-->
+<!--- service nouveau avec livewire -->
+<li class="{{ request()->routeIs('services.index') ? 'active' : '' }}">
+    <a href="{{ route('services.index') }}">
+        <i class='bx bx-calendar'></i>
+        <span class="text">Services</span>
+    </a>
+</li>
+
+
                 <li>
                     <a href="#">
                         <i class='bx bxs-message-dots'></i>
@@ -741,10 +774,10 @@
                 </li>
             </ul>
             <ul class="side-menu">
-                <li>
-                    <a href="#">
-                        <i class='bx bxs-cog'></i>
-                        <span class="text">Settings</span>
+                <li class="{{ request()->routeIs('profile.edit') ? 'active' : '' }}">
+                    <a href="{{ route('profile.edit') }}">
+                        <i class='bx bxs-user-circle'></i>
+                        <span class="text">Profile</span>
                     </a>
                 </li>
                 <li>
@@ -769,21 +802,21 @@
             <nav>
                 <i class='bx bx-menu'></i>
                 <a href="#" class="nav-link">Categories</a>
-                <form action="#">
+             <!--   <form action="#">
                     <div class="form-input">
                         <input type="search" placeholder="Search...">
                         <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
                     </div>
-                </form>
-                <!--  pour le mode dark
-                 <input type="checkbox" id="switch-mode" hidden>
+                </form>-->
+                <form ></form>
+              <!---   <input type="checkbox" id="switch-mode" hidden>
                 <label for="switch-mode" class="switch-mode"></label>  -->
                 <a href="#" class="notification">
                     <i class='bx bxs-bell'></i>
                     <span class="num">9</span>
                 </a>
-                <a href="#" class="profile">
-                    <img src="img/people.png">
+                <a href="{{ route('profile.edit') }}" class="profile">
+                    <img src="{{ asset('images/user.png') }}" >
                 </a>
             </nav>
             <!-- NAVBAR -->
@@ -874,6 +907,9 @@
             }
         })
     </script>
+
+
+
 
 </body>
 

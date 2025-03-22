@@ -1,8 +1,11 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\TableauDeService;
 use Illuminate\Http\Request;
+use App\Models\User;
+
 
 class TableauDeServiceController extends Controller
 {
@@ -10,7 +13,27 @@ class TableauDeServiceController extends Controller
     public function index()
     {
         $tableauxDeService = TableauDeService::all();
-        return view('tableaux_de_service.index', compact('tableauxDeService'));
+        // Récupération des techniciens de surveillance
+        $surveillants = User::whereHas('poste', function ($query) {
+            $query->where('nom', 'Technicien de surveillance');
+        })->get()->sortBy('name');
+
+        // Si moins de 3 surveillants, on ajoute des techniciens de maintenance
+        if ($surveillants->count() < 3) {
+            // Calcul du nombre de techniciens manquants
+            $manque = 3 - $surveillants->count();
+
+            // Récupérer les techniciens de maintenance pour compléter
+            $maintenances = User::whereHas('poste', function ($query) {
+                $query->where('nom', 'Technicien de maintenance');
+            })->take($manque)->get()->sortBy('name');
+        } else {
+            $maintenances = collect();  // Pas besoin d'ajouter de maintenances si on a déjà 3 surveillants
+        }
+
+
+
+        return view('tableaux_de_service.index', compact('tableauxDeService', 'surveillants', 'maintenances'));
     }
 
     // Méthode pour afficher le formulaire de création d'un tableau de service
@@ -25,7 +48,7 @@ class TableauDeServiceController extends Controller
         // Validation des données envoyées
         $request->validate([
             'user_id' => 'required|exists:users,id',
-            'quart_id' => 'exists:quarts,id',
+            'quart_id' => 'nullable|exists:quarts,id',
             'date_service' => 'required|date',
             'heure_debut' => 'array', // Validation pour le tableau
             'heure_fin' => 'array',   // Validation pour le tableau
@@ -43,7 +66,7 @@ class TableauDeServiceController extends Controller
         ]);
 
         return redirect()->route('tableau_de_services.index')
-                         ->with('success', 'Tableau de service ajouté avec succès.');
+            ->with('success', 'Tableau de service ajouté avec succès.');
     }
 
     // Méthode pour afficher le formulaire d'édition d'un tableau de service
@@ -61,8 +84,8 @@ class TableauDeServiceController extends Controller
             'user_id' => 'required|exists:users,id',
             'quart_id' => 'exists:quarts,id',
             'date_service' => 'required|date',
-            'heure_debut' => 'array',
-            'heure_fin' => 'array',
+            'heure_debut' => 'required|array',
+            'heure_fin' => 'required|array',
             'week' => 'array',
         ]);
 
@@ -78,7 +101,7 @@ class TableauDeServiceController extends Controller
         ]);
 
         return redirect()->route('tableau_de_services.index')
-                         ->with('success', 'Tableau de service mis à jour avec succès.');
+            ->with('success', 'Tableau de service mis à jour avec succès.');
     }
 
     // Méthode pour supprimer un tableau de service
@@ -88,6 +111,6 @@ class TableauDeServiceController extends Controller
         $tableauDeService->delete();
 
         return redirect()->route('tableau_de_services.index')
-                         ->with('success', 'Tableau de service supprimé avec succès.');
+            ->with('success', 'Tableau de service supprimé avec succès.');
     }
 }

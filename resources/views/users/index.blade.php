@@ -28,7 +28,7 @@
                     <tr class="bg-gray-200 text-gray-700 uppercase text-sm">
                         <th class="px-4 py-3 text-left">Nom</th>
                         <th class="px-4 py-3 text-left">Email</th>
-                        <th class="px-4 py-3 text-left">Rôle</th>
+                        <th class="px-4 py-3 text-left">Poste</th>
                         <th class="px-4 py-3 text-center">Actions</th>
                     </tr>
                 </thead>
@@ -38,7 +38,7 @@
                             <td class="px-4 py-3">{{ $user->name }}</td>
                             <td class="px-4 py-3">{{ $user->email }}</td>
 
-                            <td class="px-4 py-3" > {{ $user->role ? $user->role->name : 'Aucun rôle attribué' }}  </td>
+                            <td class="px-4 py-3"> {{ $user->poste ? $user->poste->nom : 'Aucun poste attribué' }} </td>
 
                             <td class="px-4 py-3 flex justify-center space-x-2">
                                 <!-- Modifier -->
@@ -59,9 +59,9 @@
                         <div class="modal fade" id="editModal-{{ $user->id }}" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
-                                    <div class="modal-header bg-yellow-600">
-                                        <h5 class="modal-title ">Modifier l'utilisateur</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    <div class="modal-header bg-yellow-500">
+                                        <h5 class="modal-title text-white">Modifier l'utilisateur</h5>
+                                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
                                         <form action="{{ route('users.update', $user) }}" method="POST">
@@ -70,34 +70,45 @@
 
                                             <label>Nom</label>
                                             <input type="text" name="name" value="{{ $user->name }}"
-                                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none" required>
+                                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none"
+                                                required>
 
                                             <label>Email</label>
                                             <input type="email" name="email" value="{{ $user->email }}"
-                                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none" required>
+                                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none"
+                                                required>
 
                                             <!-- Ajout des champs matricule et poste -->
                                             <label>Matricule</label>
                                             <input type="text" name="matricule" value="{{ $user->matricule }}"
-                                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none" required>
+                                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none"
+                                                required>
 
                                             <!-- Sélection du poste -->
                                             <label>Poste</label>
-                                            <select name="poste" class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none" required>
-
+                                            <select name="poste_id"
+                                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none"
+                                                required>
                                                 @foreach ($postes as $poste)
-                                                    <option value="{{ $poste->id }}" {{ $user->poste_id == $poste->id ? 'selected' : '' }}>
+                                                    <option value="{{ $poste->id }}"
+                                                        {{ ($user->poste_id ?? '') == $poste->id ? 'selected' : '' }}>
                                                         {{ $poste->nom }}
                                                     </option>
                                                 @endforeach
                                             </select>
+
                                             <!-- Sélection du Role -->
 
                                             <label>Role</label>
-                                            <select name="poste" class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none" required>
-
+                                            <select name="role_id"
+                                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none"
+                                                required>
+                                                <option value="" disabled {{ empty($user->role_id) ? 'selected' : '' }}>
+                                                    Non défini
+                                                </option>
                                                 @foreach ($roles as $role)
-                                                    <option value="{{ $role->id }}" {{ $user->role_id == $role->id ? 'selected' : '' }}>
+                                                    <option value="{{ $role->id }}"
+                                                        {{ ($user->role_id ?? '') == $role->id ? 'selected' : '' }}>
                                                         {{ $role->nom }}
                                                     </option>
                                                 @endforeach
@@ -109,7 +120,8 @@
                                                 class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none">
 
                                             <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Fermer</button>
                                                 <button type="submit" class="btn btn-primary">Enregistrer</button>
                                             </div>
                                         </form>
@@ -123,9 +135,9 @@
                         <div class="modal fade" id="deleteModal-{{ $user->id }}" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
-                                    <div class="modal-header bg-red-600">
-                                        <h5 class="modal-title ">Confirmation de suppression</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                    <div class="modal-header bg-red-500">
+                                        <h5 class="modal-title text-white">Confirmation de suppression</h5>
+                                        <button type="button" class="btn-close bg-white" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
                                         <p>Voulez-vous vraiment supprimer cet utilisateur ?</p>
@@ -153,27 +165,49 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content ">
                 <div class="modal-header bg-blue-500">
-                    <h5 class="modal-title ">Ajouter un utilisateur</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    <h5 class="modal-title text-white">Ajouter un utilisateur</h5>
+                    <button type="button" class="btn-close bg-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
                     <form action="{{ route('users.store') }}" method="POST">
                         @csrf
                         <div>
-                        <label>Nom</label>
-                        <input type="text" name="name" class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none" required>
+                            <label>Nom</label>
+                            <input type="text" name="name"
+                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none"
+                                required>
                         </div>
                         <div>
-                        <label>Email</label>
-                        <input type="email" name="email" class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none" required>
+                            <label>Email</label>
+                            <input type="email" name="email"
+                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none"
+                                required>
                         </div>
                         <!-- Sélection du rôle -->
                         <div>
-                            <label class="block text-gray-700">Rôle</label>
-                            <select name="role"
-                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none">
-                                <option selected>--Selectionner--</option>
-
+                            <label class="block text-gray-700">Role</label>
+                            <select name="role_id"
+                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none"
+                                required>
+                                <option value="" disabled selected>--Sélectionner un rôle--</option>
+                                @foreach ($roles as $role)
+                                    <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>
+                                        {{ $role->nom }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-gray-700">Poste</label>
+                            <select name="poste_id"
+                                class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none"
+                                required>
+                                <option value="" disabled selected>--Sélectionner un Poste--</option>
+                                @foreach ($postes as $poste)
+                                    <option value="{{ $poste->id }}" {{ old('poste_id') == $poste->id ? 'selected' : '' }}>
+                                        {{ $poste->nom }}
+                                    </option>
+                                @endforeach
                             </select>
                         </div>
                         <!-- Champ Mot de passe -->

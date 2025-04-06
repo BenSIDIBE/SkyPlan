@@ -61,18 +61,21 @@ class TableauServiceController extends Controller
     public function store(Request $request)
     {
         // Validation des données
-        $request->validate([
+        /*$da = $request->validate([
             'semaine' => 'required|date',
             'jour_ferie' => 'nullable|array',
             'jour_ferie.*' => 'date',
-        ]);
+        ]);*/
+
+        $da = $request->all();
 
         $data = [
-            "" => [
+            $da['semaine'] => [
                 "est_ferier" =>  false,
                 "travailleur_disponible" => [1, 2, 3, 5, 7]
             ],
         ];
+        dd($da);
 
         // Créer un tableau de service basé sur la semaine sélectionnée
         TableauService::create([

@@ -81,7 +81,7 @@ class TableauServiceController extends Controller
             'jour_ferie' => $request->input('jour_ferie', []),
         ]);
 
-        return redirect()->route('tableau_service.index')->with('success', 'Tableau de service créé avec succès.');
+        return redirect()->route('services.create')->with('success', 'Tableau de service créé avec succès.');
     }
 
     /**

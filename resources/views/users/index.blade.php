@@ -14,10 +14,10 @@
         @endif
 
         <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-gray-800">Gestion des Utilisateurs</h2>
+            <h2 class="text-2xl font-bold text-gray-800">Gestion des Employés</h2>
             <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700" data-bs-toggle="modal"
                 data-bs-target="#createModal">
-                + Ajouter un utilisateur
+                + Ajouter un Employé
             </button>
         </div>
 
@@ -60,7 +60,7 @@
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header bg-yellow-500">
-                                        <h5 class="modal-title text-white">Modifier l'utilisateur</h5>
+                                        <h5 class="modal-title text-white">Modifier l'Employé</h5>
                                         <button type="button" class="btn-close bg-white" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
@@ -140,7 +140,7 @@
                                         <button type="button" class="btn-close bg-white" data-bs-dismiss="modal"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <p>Voulez-vous vraiment supprimer cet utilisateur ?</p>
+                                        <p>Voulez-vous vraiment supprimer l'employé <strong>{{ $user->name }}</strong> ?</p>
                                     </div>
                                     <div class="modal-footer">
                                         <form action="{{ route('users.destroy', $user) }}" method="POST">
@@ -165,7 +165,7 @@
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content ">
                 <div class="modal-header bg-blue-500">
-                    <h5 class="modal-title text-white">Ajouter un utilisateur</h5>
+                    <h5 class="modal-title text-white">Ajouter un Employé</h5>
                     <button type="button" class="btn-close bg-white" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body">
@@ -183,6 +183,7 @@
                                 class="w-full p-2 border border-gray-300 rounded-lg focus:ring focus:ring-blue-300 outline-none"
                                 required>
                         </div>
+
                         <!-- Sélection du rôle -->
                         <div>
                             <label class="block text-gray-700">Role</label>

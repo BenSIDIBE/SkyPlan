@@ -80,3 +80,5 @@ Route::post('/services', [ServiceController::class, 'store'])->name('services.st
 // Suppression d'un service (DELETE)
 Route::delete('/services/{serviceId}', [ServiceController::class, 'destroy'])->name('services.destroy');
 
+use App\Livewire\AutoGenerateService;
+//Route::get('/auto-generate-service', AutoGenerateService::class)->name('auto-generate-service');

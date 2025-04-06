@@ -22,18 +22,33 @@
                 </div>
             </div>
 
-            <!-- Demande s'il y a des jours fériés ou des absences -->
-            <div class="mb-4">
-                <label class="form-label">Y a-t-il des jours fériés ou des absences à ajouter ?</label><br>
-                <input type="radio" name="presence" id="presence_oui" value="oui" onclick="toggleModalBtn(true)"> Oui
-                <input type="radio" name="presence" id="presence_non" value="non" onclick="toggleModalBtn(false)"
-                    checked> Non
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <label for="commandant_permanence" class="form-label">Commandant de Permanence :</label>
+                    <select name="commandant_permanence" id="commandant_permanence" class="form-select">
+                        <option value="" selected disabled>Choisir un commandant de permanence</option>
+                        @foreach ($utilisateurs as $utilisateur)
+                            <option value="{{ $utilisateur->id }}">{{ $utilisateur->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="permanence_tech" class="form-label">Permanence Technique :</label>
+                    <select name="permanence_tech" id="permanence_tech" class="form-select">
+                        <option value="" selected disabled>Choisir une permanence technique</option>
+                        @foreach ($utilisateurs as $utilisateur)
+                            <option value="{{ $utilisateur->id }}">{{ $utilisateur->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
             </div>
+
+            <!-- Removed unnecessary section -->
 
             <!-- Boutons pour ouvrir les modaux -->
             <div class="mb-3">
                 <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#joursFeriesModal"
-                    id="openJoursFeriesModal" disabled>
+                    id="openJoursFeriesModal">
                     Ajouter Jours Fériés
                 </button>
 
@@ -49,27 +64,22 @@
                 aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">
-                        <div class="modal-header">
+                        <div class="modal-header bg-blue-400 ">
                             <h5 class="modal-title" id="joursFeriesModalLabel">Sélectionner les Jours Fériés</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            <button type="button" class="btn-close bg-white" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <label for="jour_ferie" class="form-label">Sélectionner les jours fériés :</label>
+                            <label for="jour_ferie" class="form-label">Sélectionner les jours :</label>
                             <select name="jour_ferie[]" id="jour_ferie" class="form-select" multiple>
-                                @if (isset($joursFeries) && isset($joursFeries[$semaineSelectionnee]) && count($joursFeries[$semaineSelectionnee]) > 0)
-                                    @foreach ($joursFeries[$semaineSelectionnee] as $jour)
-                                        @php
-                                            $debutSemaine = \Carbon\Carbon::parse($jour)->startOfWeek();
-                                            $finSemaine = \Carbon\Carbon::parse($jour)->endOfWeek();
-                                        @endphp
-                                        <option value="{{ $jour }}">
-                                            {{ $debutSemaine->translatedFormat('l d/m/Y') }} -
-                                            {{ $finSemaine->translatedFormat('l d/m/Y') }}
-                                        </option>
-                                    @endforeach
-                                @else
-                                    <option disabled>Aucun jour férié disponible pour cette semaine</option>
-                                @endif
+                                @php
+                                    $jours = ['lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi'];
+                                @endphp
+                                @foreach ($jours as $jour)
+                                    @php
+                                        $date = \Carbon\Carbon::parse($semaineSelectionnee)->startOfWeek()->addDays(array_search($jour, $jours))->format('d-m-Y');
+                                    @endphp
+                                    <option value="{{ $date }}">{{ ucfirst($jour) }} le {{ $date }}</option>
+                                @endforeach
                             </select>
                             <small class="text-muted">Maintenez Ctrl pour sélectionner plusieurs jours.</small>
                         </div>
@@ -120,7 +130,7 @@
             <input type="hidden" name="absences" id="absences_hidden">
 
             <!-- Boutons de soumission -->
-            <button type="submit" class="btn btn-primary" onclick="submitAndRedirect(event)">Continuer</button>
+            <button type="submit" class="btn btn-primary">Continuer</button>
 
             <script>
                 function submitAndRedirect(event) {
@@ -168,13 +178,13 @@
         // Fonction pour activer/désactiver les boutons des modaux
         function toggleModalBtn(enable) {
             var joursFeriesBtn = document.getElementById('openJoursFeriesModal');
-            var absencesBtn = document.getElementById('openAbsencesModal');
+            var absencesBtn = document.getElementById('openTechniciensModal');
             joursFeriesBtn.disabled = !enable;
             absencesBtn.disabled = !enable;
         }
 
         // Fonction pour mettre à jour la liste des jours fériés en fonction de la semaine sélectionnée
-        function updateJouies() {
+        function updateJoursFeries() {
             var semaineSelectionnee = document.getElementById('semaine').value;
 
             fetch("{{ route('tableau_service.create') }}?semaine=" + semaineSelectionnee)

@@ -9,7 +9,7 @@
     <title>{{ config('app.name', 'SkyPlan') }}</title>
 
     <!-- Boxicons -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>    <!-- Fonts -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'> <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
     <script src="https://cdn.tailwindcss.com"></script>
@@ -160,6 +160,8 @@
             box-shadow: 20px -20px 0 var(--grey);
             z-index: -1;
         }
+
+
 
         #sidebar .side-menu li a {
             width: 100%;
@@ -699,14 +701,20 @@
 
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100" >
+    <div class="min-h-screen bg-gray-100">
 
         <!-- SIDEBAR -->
         <section id="sidebar">
-            <a href="#" class="brand">
-                <i class='bx bxs-smile'></i>
-                <span class="text">SkyPlan</span>
-            </a>
+            <div id="brand-container">
+                <a href="#" class="brand">
+                    <span class="text"
+                        style="display: block; text-align: center; position: auto; bottom: 0px; width: 50px; font-size:30px; margin-top: 10px; padding-left: 40px">SkyPlan</span>
+                </a>
+                <img src="{{ asset('images/logo.png') }}" alt="SkyPlan Logo"
+                    style="height: 65px; display: block; margin: 0 auto; margin-top: 5px; transition: height 0.3s;">
+            </div>
+
+
             <ul class="side-menu top">
                 <li class="{{ request()->routeIs('dashboard') ? 'active' : '' }}">
                     <a href="{{ route('dashboard') }}">
@@ -714,56 +722,19 @@
                         <span class="text">Dashboard</span>
                     </a>
                 </li>
-                <li class="{{ request()->routeIs('postes.index') ? 'active' : '' }}">
+                <!-- -->  <li class="{{ request()->routeIs('postes.index') ? 'active' : '' }}">
                     <a href="{{ route('postes.index') }}">
                         <i class='bx bx-briefcase-alt-2'></i>
                         <span class="text">Postes</span>
                     </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class='bx bxs-doughnut-chart'></i>
-                        <span class="text">Analytics</span>
-                    </a>
-                </li>
+                </li>  <!-- -->
 
-<!-- ancien tableau de service -->
-            <!--    <li class="{{ request()->routeIs('tableaux_de_service.index') ? 'active' : '' }}">
+
+                <!-- ancien tableau de service -->
+                <li class="{{ request()->routeIs('tableaux_de_service.index') ? 'active' : '' }}">
                     <a href="{{ route('tableaux_de_service.index') }}">
                         <i class='bx bx-calendar'></i>
                         <span class="text">Tableau de Service</span>
-                    </a>
-                </li>
-            -->
-<!---->
-<!--- nouveau-->
-<li class="{{ request()->routeIs('tableau_service.index') ? 'active' : '' }}">
-    <a href="{{ route('tableau_service.index') }}">
-        <i class='bx bx-calendar'></i>
-        <span class="text">Tableau de Service</span>
-    </a>
-</li>
-<!--service
-<li class="{{ request()->routeIs('services.index') ? 'active' : '' }}">
-    <a href="{{ route('services.index') }}">
-        <i class='bx bx-calendar'></i>
-        <span class="text">Services</span>
-    </a>
-</li>
--->
-<!--- service nouveau avec livewire -->
-<li class="{{ request()->routeIs('services.index') ? 'active' : '' }}">
-    <a href="{{ route('services.index') }}">
-        <i class='bx bx-calendar'></i>
-        <span class="text">Services</span>
-    </a>
-</li>
-
-
-                <li>
-                    <a href="#">
-                        <i class='bx bxs-message-dots'></i>
-                        <span class="text">Message</span>
                     </a>
                 </li>
                 <li class="{{ request()->routeIs('users.index') ? 'active' : '' }}">
@@ -772,6 +743,44 @@
                         <span class="text">Utilisateur</span>
                     </a>
                 </li>
+
+                <!--- nouveau-->
+                <!--  <li class="{{ request()->routeIs('tableau_service.index') ? 'active' : '' }}">
+                    <a href="{{ route('tableau_service.index') }}">
+                        <i class='bx bx-calendar'></i>
+                        <span class="text">Tableau de Service</span>
+                    </a>
+                </li> -->
+                <!--service -->
+                <li class="{{ request()->routeIs('services.index') ? 'active' : '' }}">
+                    <a href="{{ route('services.index') }}">
+                          <i class='bx bx-calendar'></i>
+                          <span class="text">Services</span>
+                    </a>
+                </li>
+                   <!-- -->
+                <!--- service nouveau avec livewire -->
+                     <li>
+                         <a href="#">
+                           <i class='bx bxs-doughnut-chart'></i>
+                             <span class="text">Statistique</span>
+                        </a>
+                    </li> <!--  -->
+                    <li class="{{ request()->routeIs('services.index') ? 'active' : '' }}">
+                        <a href="{{ route('services.index') }}">
+                            <i class='bx bx-calendar'></i>
+                            <span class="text">Services</span>
+                        </a>
+                    </li> <!-- -->
+
+
+                    <li>
+                        <a href="#">
+                            <i class='bx  bxs-bell'></i>
+                            <span class="text">Notification</span>
+                        </a>
+                    </li>
+
             </ul>
             <ul class="side-menu">
                 <li class="{{ request()->routeIs('profile.edit') ? 'active' : '' }}">
@@ -802,21 +811,20 @@
             <nav>
                 <i class='bx bx-menu'></i>
                 <a href="#" class="nav-link">Categories</a>
-             <!--   <form action="#">
+                <!--   <form action="#">
                     <div class="form-input">
                         <input type="search" placeholder="Search...">
                         <button type="submit" class="search-btn"><i class='bx bx-search'></i></button>
                     </div>
                 </form>-->
-                <form ></form>
-              <!---   <input type="checkbox" id="switch-mode" hidden>
+                <form></form>
+                <!---   <input type="checkbox" id="switch-mode" hidden>
                 <label for="switch-mode" class="switch-mode"></label>  -->
                 <a href="#" class="notification">
                     <i class='bx bxs-bell'></i>
-                    <span class="num">9</span>
                 </a>
                 <a href="{{ route('profile.edit') }}" class="profile">
-                    <img src="{{ asset('images/user.png') }}" >
+                    <img src="{{ asset('images/user.png') }}">
                 </a>
             </nav>
             <!-- NAVBAR -->

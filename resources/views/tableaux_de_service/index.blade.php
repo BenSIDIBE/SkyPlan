@@ -14,11 +14,16 @@
             /* Pleine largeur */
             text-align: center;
         }
+
+
+        
+</style>
+
+        
     </style>
     <!-- Ajouter le script Bootstrap JS pour la modal -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <div class="container py-4">
-
+    <div class="container py-4" id="zone-impression">
         <div class="d-flex justify-between items-center mb-3">
             <h2>Tableau de Service</h2>
             <!-- Si tu veux ajouter un bouton ici, comme pour ajouter un poste -->
@@ -33,13 +38,13 @@
                 <thead>
                     <tr class="bg-gray-200 text-gray-700 uppercase text-sm">
                         <th rowspan="1" class="px-4 py-2">Jour et date</th>
-                        <th colspan="4" class="px-4 py-2">Lundi <br> 28/06/2021</th>
-                        <th colspan="4" class="px-4 py-2">Mardi <br> 29/06/2021</th>
-                        <th colspan="4" class="px-4 py-2">Mercredi <br> 30/06/2021</th>
-                        <th colspan="4" class="px-4 py-2">Jeudi <br> 01/07/2021</th>
-                        <th colspan="4" class="px-4 py-2">Vendredi <br> 02/07/2021</th>
-                        <th colspan="4" class="px-4 py-2">Samedi <br> 03/07/2021</th>
-                        <th colspan="4" class="px-4 py-2">Dimanche <br> 04/07/2021</th>
+                        <th colspan="4" class="px-4 py-2">Lundi <br> 31/03/2025</th>
+                        <th colspan="4" class="px-4 py-2">Mardi <br> 01/04/2025</th>
+                        <th colspan="4" class="px-4 py-2">Mercredi <br> 02/04/2025</th>
+                        <th colspan="4" class="px-4 py-2">Jeudi <br> 03/04/2025</th>
+                        <th colspan="4" class="px-4 py-2">Vendredi <br> 004/04/2025</th>
+                        <th colspan="4" class="px-4 py-2">Samedi <br> 05/04/2025</th>
+                        <th colspan="4" class="px-4 py-2">Dimanche <br> 06/04/2025</th>
                         <!-- Ajoute les autres jours pareil... -->
                         <th colspan="4" rowspan="2" class="px-4 py-2">Décomptes <br> des Heures</th>
 
@@ -129,27 +134,121 @@
 
                 <tbody>
                     <!-- Affichage des techniciens de surveillance -->
-                    @foreach ($surveillants as $user)
-                        <tr class="border-b hover:bg-gray-50 transition">
+                   <!-- @foreach ($surveillants as $user)-->
+                    <!---    <tr class="border-b hover:bg-gray-50 transition">
+                            @foreach ($surveillants as $user)
                             <td class="font-bold px-4 py-2">{{ $user->name }}</td>
 
                             @for ($i = 0; $i < 7; $i++)
+
+                                <td id="nuit" class="clickable"></td>
+                                <td id="matin" class="clickable"></td>
+                                <td id="matin" class="clickable"></td>
+                                <td id="nuit" class="clickable"></td>
+                            @endfor
+                            @endforeach
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>  --->
+                   <!--- @endforeach -->
+
+                   <tr class="border-b hover:bg-gray-50 transition">
+                    <td class="font-bold px-1 py-1">BAYALA S. Noel</td>
+                    @for ($i = 0; $i < 7; $i++)
                                 <!-- 7 jours -->
                                 <td id="nuit" class="clickable"></td>
                                 <td id="matin" class="clickable"></td>
                                 <td id="matin" class="clickable"></td>
                                 <td id="nuit" class="clickable"></td>
-                            @endfor
+                    @endfor
+                    <td>44</td>
+                    <td>15</td>
+                    <td>0</td>
+                    <td>6</td>
 
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    @endforeach
+                   </tr>
+
+
+
+
+                   <tr class="border-b hover:bg-gray-50 transition">
+                    <td class="font-bold px-1 py-1">COULIBALY H. Lucien</td>
+                    @for ($i = 0; $i < 7; $i++)
+                                <!-- 7 jours -->
+                                <td id="nuit" class="clickable"></td>
+                                <td id="matin" class="clickable"></td>
+                                <td id="matin" class="clickable"></td>
+                                <td id="nuit" class="clickable"></td>
+                    @endfor
+                    <td>41</td>
+                    <td>18</td>
+                    <td>7</td>
+                    <td>03</td>
+
+                   </tr>
+
+
+
+                   <tr class="border-b hover:bg-gray-50 transition">
+                    <td class="font-bold px-1 py-1">ILBOUDO Parfait</td>
+                    @for ($i = 0; $i < 7; $i++)
+                                <!-- 7 jours -->
+                                <td id="nuit" class="clickable"></td>
+                                <td id="matin" class="clickable"></td>
+                                <td id="matin" class="clickable"></td>
+                                <td id="nuit" class="clickable"></td>
+                    @endfor
+                    <td>48</td>
+                    <td>18</td>
+                    <td>7</td>
+                    <td>0</td>
+
+                   </tr>
+
+
+
+                   <tr class="border-b hover:bg-gray-50 transition">
+                    <td class="font-bold px-1 py-1">SOME Jean De Dieu.</td>
+                    @for ($i = 0; $i < 7; $i++)
+                                <!-- 7 jours -->
+                                <td id="nuit" class="clickable"></td>
+                                <td id="matin" class="clickable"></td>
+                                <td id="matin" class="clickable"></td>
+                                <td id="nuit" class="clickable"></td>
+                    @endfor
+                    <td>42</td>
+                    <td>12</td>
+                    <td>0</td>
+                    <td>0</td>
+
+                   </tr>
+
+
+
+
+
+
+
+
 
                     <!-- Complément avec techniciens de maintenance si besoin -->
-                    @foreach ($maintenances as $user)
+                 <!---  @foreach ($maintenances as $user)
                         <tr class="border-b hover:bg-gray-50 transition">
                             <td class="font-bold px-4 py-2">{{ $user->name }}</td>
 
@@ -165,7 +264,7 @@
                             <td></td>
                             <td></td>
                         </tr>
-                    @endforeach
+                    @endforeach  -->
 
                 </tbody>
             </table>
@@ -173,6 +272,15 @@
         </div>
 
     </div>
+
+    <div class="text-end no-print">
+        <button class="btn btn-primary">Enregistrer</button>
+    </div>
+    
+   
+    
+    
+
     <script>
         document.querySelectorAll('.clickable').forEach(function(cell) {
             cell.addEventListener('click', function() {

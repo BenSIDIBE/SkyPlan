@@ -11,9 +11,11 @@ class Cellule extends Component
     public $date_service;
     public $heure_debut;
     public $heure_fin;
+    public $id_tableauService;
 
-    public function mount($user_id, $date_service, $heure_debut, $heure_fin)
+    public function mount($user_id, $date_service, $heure_debut, $heure_fin, $id_tableauService)
     {
+        $this->id_tableauService = $id_tableauService;
         $this->id_user = $user_id;
         $this->date_service = $date_service;
         $this->heure_debut = $heure_debut;
@@ -46,7 +48,7 @@ HTML;
                 ]);
         } else {
             DB::table('services')->insert([
-                'id_tableauService' => 1,
+                'id_tableauService' => $this->id_tableauService,
                 'id_user' => $this->id_user,
                 'date_service' => $this->date_service,
                 'heure_debut' => $this->heure_debut,

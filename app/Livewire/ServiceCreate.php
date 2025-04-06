@@ -11,16 +11,17 @@ class ServiceCreate extends Component
 {
     public $jours;
     public $surveillants;
-
+    public $id_tableauService;
     public function mount()
     {
         // Définir les jours et les surveillants
         // Récupérer la date actuelle
         $today = \Carbon\Carbon::today();
-
         // Calculer la date du lundi de la semaine prochaine
         $lundi_semaine_suivante = $today->addWeek()->startOfWeek(\Carbon\Carbon::MONDAY);
-
+        // Récupérer l'id du tableau de service qui a pour date de début le lundi de la semaine prochaine
+        $this->id_tableauService= \App\Models\TableauService::where('date_debut', $lundi_semaine_suivante->format('Y-m-d'))
+            ->value('id');
         // Générer les jours de la semaine suivante
         $this->jours = [
             'Lundi' => $lundi_semaine_suivante->format('d-m-Y'),
@@ -55,12 +56,13 @@ class ServiceCreate extends Component
     }
 
     // Dans ton composant Livewire
-public function storeService($userId, $dateService, $heureDebut, $heureFin)
+public function storeService($userId, $dateService, $heureDebut, $heureFin, $id_tableauService)
 {
 
     try {
         // Ici, tu fais l'enregistrement dans la base de données
         Service::create([
+            'id_tableauService' => $id_tableauService,
             'user_id' => $userId,
             'date_service' => $dateService,
             'heure_debut' => $heureDebut,
@@ -74,9 +76,9 @@ public function storeService($userId, $dateService, $heureDebut, $heureFin)
         session()->flash('error', 'Erreur lors de l\'ajout du service!');
     }
 }
+/*
 public function test(string $a){
     dd($a);
 }
-
-
+*/
 }

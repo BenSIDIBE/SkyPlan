@@ -22,6 +22,8 @@ class TableauService extends Model
         'week' => 'array',
         'jour_ferie' => 'array',
         'data' => 'array',
+        'date_debut' => 'date',
+        'date_fin' => 'date',
     ];
 
     protected static function boot()
@@ -40,10 +42,11 @@ class TableauService extends Model
                 $joursDeLaSemaine[] = $joursSemaine[$i]; // Ajouter le jour de la semaine en français
             }
 
-            $service->date_debut = $dates[0]; // Lundi
+       /*     $service->date_debut = $dates[0]; // Lundi
             $service->date_fin = $dates[6]; // Dimanche
+       */
             $service->week = $joursDeLaSemaine; // Jours de la semaine en français
-            $service->jour_ferie = []; // Vide au début
+            /*$service->jour_ferie = []; // Vide au début*/
         });
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\TableauService;
 use Carbon\Carbon;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
@@ -48,14 +49,50 @@ class TableauServiceFormComponent extends Component
     }
 
     public function onSubmit(){
-        dd(
-            $this->semaine,
-            $this->jour_ferie,
-            $this->technicien_absent,
-            $this->permanence_tech,
-            $this->commandant_permanence,
 
-        );
+
+
+        try {
+            \DB::beginTransaction();
+            $this->validate([
+                'semaine' => 'required',
+                'jour_ferie' => 'array',
+                'technicien_absent' => 'array',
+                'permanence_tech' => 'string',
+                'commandant_permanence' => 'string',
+            ]);
+
+            $data = [
+                'semaine' => $this->semaine,
+                'jour_ferie' => $this->jour_ferie,
+                'technicien_absent' => $this->technicien_absent,
+                'permanence_tech' => $this->permanence_tech,
+                'commandant_permanence' => $this->commandant_permanence,
+            ];
+
+
+            $res = TableauService::create([
+                'date_debut' => Carbon::createFromFormat('d/m/Y', $this->semaine),
+                'date_fin' => Carbon::createFromFormat('d/m/Y', $this->semaine)->addDays(6),
+                'week' => $this->week,
+                'jour_ferie' => $this->jour_ferie,
+                'data' => $data,
+            ]);
+            \DB::commit();
+            if ($res) {
+                \Log::info('TableauService created successfully: ' . $res->id);
+                return to_route('services.create', ['id_tableauService' => $res->id])
+                    ->with('success', 'Données enregistrées avec succès !');
+            } else {
+                return back()->with('error', 'Erreur lors de l\'enregistrement des données.');
+            }
+
+        } catch (\Exception $e) {
+            \Log::error('Error saving data: ' . $e->getMessage());
+            \DB::rollBack();
+            // Handle the exception
+        }
+
     }
 
 

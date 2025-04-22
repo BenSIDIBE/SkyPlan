@@ -2,6 +2,9 @@
 
 namespace App\Livewire;
 
+use App\Models\TableauService;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Poste;
@@ -12,13 +15,20 @@ class ServiceCreate extends Component
     public $jours;
     public $surveillants;
     public $id_tableauService;
-    public function mount()
+
+    public TableauService $tableauService;
+
+    public function mount(Request $request)
     {
+        $this->tableauService = TableauService::findOrFail((int)$request->id_tableauService);
         // Définir les jours et les surveillants
         // Récupérer la date actuelle
-        $today = \Carbon\Carbon::today();
+        /*$today = \Carbon\Carbon::today();*/
+
         // Calculer la date du lundi de la semaine prochaine
-        $lundi_semaine_suivante = $today->addWeek()->startOfWeek(\Carbon\Carbon::MONDAY);
+        /*$lundi_semaine_suivante = $today->addWeek()->startOfWeek(\Carbon\Carbon::MONDAY);*/
+
+        $lundi_semaine_suivante = $this->tableauService->date_debut;
         // Récupérer l'id du tableau de service qui a pour date de début le lundi de la semaine prochaine
         $this->id_tableauService= \App\Models\TableauService::where('date_debut', $lundi_semaine_suivante->format('Y-m-d'))
             ->value('id');
@@ -47,7 +57,9 @@ class ServiceCreate extends Component
         }
 
         // Assigner la collection finale des surveillants
-        $this->surveillants = $surveillants;
+
+        $this->surveillants = $surveillants->toQuery()->whereNotIn('id',$this->tableauService->data["technicien_absent"])->get();
+
     }
 
     public function render()

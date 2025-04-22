@@ -101,7 +101,13 @@ class AutoGenerateService extends Component
 
     public function render()
     {
-        return view('livewire.auto-generate-service');
+        return view('livewire.auto-generate-service')
+            ->extends('layouts.app')
+            ->section('content')
+            ->layoutData([
+                'title' => 'Génération automatique de service',
+                'description' => 'Générez automatiquement des services pour une période donnée.',
+            ]);
     }
 
 }

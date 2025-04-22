@@ -25,6 +25,8 @@ class TableauServiceFormComponent extends Component
     public $commandant_permanence = "";
     public $listeDate = [];
 
+    public bool $isAutomatic = false;
+
     public $rerender = false;
 
     public function mount($semaines ,$semaineSelectionnee ,$week ,$utilisateurs ,$postes): void
@@ -81,6 +83,10 @@ class TableauServiceFormComponent extends Component
             \DB::commit();
             if ($res) {
                 \Log::info('TableauService created successfully: ' . $res->id);
+                if ($this->isAutomatic){
+                    return to_route('auto-generate-service')
+                        ->with('success', 'Données enregistrées avec succès !');
+                }
                 return to_route('services.create', ['id_tableauService' => $res->id])
                     ->with('success', 'Données enregistrées avec succès !');
             } else {

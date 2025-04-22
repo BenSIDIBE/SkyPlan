@@ -18,7 +18,7 @@ class ServiceCreate extends Component
 
     public TableauService $tableauService;
 
-    public function mount(Request $request)
+    public function mount(Request $request): void
     {
         $this->tableauService = TableauService::findOrFail((int)$request->id_tableauService);
         // Définir les jours et les surveillants

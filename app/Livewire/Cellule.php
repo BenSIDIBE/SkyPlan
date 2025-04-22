@@ -13,7 +13,7 @@ class Cellule extends Component
     public $heure_fin;
     public $id_tableauService;
 
-    public function mount($user_id, $date_service, $heure_debut, $heure_fin, $id_tableauService)
+    public function mount($user_id, $date_service, $heure_debut, $heure_fin, $id_tableauService):void
     {
         $this->id_tableauService = $id_tableauService;
         $this->id_user = $user_id;

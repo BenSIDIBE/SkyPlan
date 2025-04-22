@@ -73,7 +73,7 @@
                                         data-heure-debut="00H"
                                         data-heure-fin="06H"
                                         data-id-tableau-service="{{ $id_tableauService }}">
-                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '00H', 'heure_fin' => '06H', 'id_tableauService' => $id_tableauService], key($user->id . $date . '00H-06H'))
+                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '00H', 'heure_fin' => '06H', 'id_tableauService' =>  $tableauService->id], key($user->id . $date . '00H-06H'))
                                     </td>
                                     <td class="clickable cell"
                                         data-user-id="{{ $user->id }}"
@@ -81,7 +81,7 @@
                                         data-heure-debut="06H"
                                         data-heure-fin="13H"
                                         data-id-tableau-service="{{ $id_tableauService }}">
-                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '06H', 'heure_fin' => '13H', 'id_tableauService' => $id_tableauService], key($user->id . $date . '06H-13H'))
+                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '06H', 'heure_fin' => '13H', 'id_tableauService' =>  $tableauService->id], key($user->id . $date . '06H-13H'))
                                     </td>
                                     <td class="clickable cell"
                                         data-user-id="{{ $user->id }}"
@@ -89,7 +89,7 @@
                                         data-heure-debut="13H"
                                         data-heure-fin="20H"
                                         data-id-tableau-service="{{ $id_tableauService }}">
-                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '13H', 'heure_fin' => '20H', 'id_tableauService' => $id_tableauService], key($user->id . $date . '13H-20H'))
+                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '13H', 'heure_fin' => '20H', 'id_tableauService' =>  $tableauService->id], key($user->id . $date . '13H-20H'))
                                     </td>
                                     <td class="clickable cell"
                                         data-user-id="{{ $user->id }}"
@@ -97,7 +97,7 @@
                                         data-heure-debut="20H"
                                         data-heure-fin="24H"
                                         data-id-tableau-service="{{ $id_tableauService }}">
-                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '20H', 'heure_fin' => '24H', 'id_tableauService' => $id_tableauService], key($user->id))
+                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '20H', 'heure_fin' => '24H', 'id_tableauService' =>  $tableauService->id], key($user->id))
                                     </td>
                                 @endforeach
 

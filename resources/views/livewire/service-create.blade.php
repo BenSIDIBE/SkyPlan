@@ -30,10 +30,10 @@
                 </div>
                 <table class="w-full border-collapse bg-white  shadow rounded-lg overflow-auto">
                     <thead>
-                        <tr class="bg-gray-200 text-gray-700 uppercase text-sm">
+                        <tr class="bg-gray-100 text-gray-700 uppercase text-sm">
                             <th rowspan="1" class="px-4 py-2">Jour et date</th>
                             @foreach ($jours as $jour => $date)
-                                <th colspan="4" class="px-4 py-2">{{ $jour }} <br> {{ $date }}</th>
+                                <th colspan="4" class="px-4 py-2">{{ $jour }}<br> {{ $date }}</th>
                             @endforeach
                             <th colspan="4" rowspan="2" class="px-4 py-2">Décomptes <br> des Heures</th>
                         </tr>
@@ -81,6 +81,7 @@
                                         data-heure-debut="06H"
                                         data-heure-fin="13H"
                                         data-id-tableau-service="{{ $id_tableauService }}">
+                                     
                                         @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '06H', 'heure_fin' => '13H', 'id_tableauService' =>  $tableauService->id], key($user->id . $date . '06H-13H'))
                                     </td>
                                     <td class="clickable cell"
@@ -96,22 +97,25 @@
                                         data-date="{{ $date }}"
                                         data-heure-debut="20H"
                                         data-heure-fin="24H"
-                                        data-id-tableau-service="{{ $id_tableauService }}">
-                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '20H', 'heure_fin' => '24H', 'id_tableauService' =>  $tableauService->id], key($user->id))
+                                        data-id-tableau-service="{{ $id_tableauService }}"
+                                        wire:click="increment" >
+                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '20H', 'heure_fin' => '24H', 'id_tableauService' =>  $tableauService->id], key($user->id . $date . '20H-24H'))
+  
                                     </td>
                                 @endforeach
 
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
+                                <td>{{ $hte }}</td>
+        <td>{{ $decomptes[$user->id]['hnn'] ?? 0 }}</td>
+        <td>{{ $decomptes[$user->id]['hjf'] ?? 0 }}</td>
+        <td>{{ $decomptes[$user->id]['hnf'] ?? 0 }}</td>
+
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-        <div class="text-end"><button class="btn btn-primary">Enregistrer</button></div>
+        <div class="text-end"><a href="{{ route('mail', ['id_tableauService' => $tableauService->id]) }}" class="btn btn-primary"> Enregistre </a> </div>
 
 
         <!-- Script JavaScript pour la coloration et l'ajout de "X" -->

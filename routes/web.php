@@ -83,3 +83,7 @@ Route::delete('/services/{serviceId}', [ServiceController::class, 'destroy'])->n
 
 
 Route::get('/auto-generate-service', AutoGenerateService::class)->name('auto-generate-service');
+
+
+use App\Http\Controllers\MailController;
+Route::get('/mail/{id_tableauService}', [MailController::class, 'send'])->name('mail');

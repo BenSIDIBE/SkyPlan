@@ -22,10 +22,12 @@
         <div class="row mb-4">
             <div class="col-md-6">
                 <label for="commandant_permanence" class="form-label">Commandant de Permanence :</label>
-                <select name="commandant_permanence" id="commandant_permanence"  wire:model="commandant_permanence" class="form-select">
+                <select name="commandant_permanence" id="commandant_permanence" wire:model="commandant_permanence" class="form-select">
                     <option value="" selected disabled>Choisir un commandant de permanence</option>
                     @foreach ($utilisateurs as $utilisateur)
-                        <option value="{{ $utilisateur->id }}">{{ $utilisateur->name }}</option>
+                        @if ($utilisateur->poste_id === $postes->firstWhere('nom', 'Commandant')->id || $utilisateur->poste_id === $postes->firstWhere('nom', 'Technicien de maintenance')->id)
+                            <option value="{{ $utilisateur->id }}">{{ $utilisateur->name }}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>
@@ -34,7 +36,9 @@
                 <select name="permanence_tech" id="permanence_tech" wire:model="permanence_tech" class="form-select">
                     <option value="" selected disabled>Choisir une permanence technique</option>
                     @foreach ($utilisateurs as $utilisateur)
-                        <option value="{{ $utilisateur->id }}">{{ $utilisateur->name }}</option>
+                        @if ($utilisateur->poste_id === $postes->firstWhere('nom', 'Technicien de maintenance')->id)
+                            <option value="{{ $utilisateur->id }}">{{ $utilisateur->name }}</option>
+                        @endif
                     @endforeach
                 </select>
             </div>

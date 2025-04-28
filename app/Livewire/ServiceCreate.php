@@ -15,6 +15,11 @@ class ServiceCreate extends Component
     public $jours;
     public $surveillants;
     public $id_tableauService;
+   /* protected $listeners = ['serviceAdded' => 'recalculerDecompte'];
+    public $decomptes = [];*/
+    public $hte = 5;
+
+
 
     public TableauService $tableauService;
 
@@ -38,7 +43,7 @@ class ServiceCreate extends Component
             'Mardi' => $lundi_semaine_suivante->addDay()->format('d-m-Y'),
             'Mercredi' => $lundi_semaine_suivante->addDay()->format('d-m-Y'),
             'Jeudi' => $lundi_semaine_suivante->addDay()->format('d-m-Y'),
-            'Vendredi' => $lundi_semaine_suivante->addDay()->format('Y-m-d'),
+            'Vendredi' => $lundi_semaine_suivante->addDay()->format('d-m-Y'),
             'Samedi' => $lundi_semaine_suivante->addDay()->format('d-m-Y'),
             'Dimanche' => $lundi_semaine_suivante->addDay()->format('d-m-Y'),
         ];
@@ -59,6 +64,11 @@ class ServiceCreate extends Component
         // Assigner la collection finale des surveillants
 
         $this->surveillants = $surveillants->toQuery()->whereNotIn('id',$this->tableauService->data["technicien_absent"])->get();
+        
+       /* foreach ($this->surveillants as $surveillant) {
+            $this->recalculerDecompte($surveillant->id);
+        }*/
+        
 
     }
 
@@ -88,9 +98,59 @@ public function storeService($userId, $dateService, $heureDebut, $heureFin, $id_
         session()->flash('error', 'Erreur lors de l\'ajout du service!');
     }
 }
+
+
+
+
 /*
 public function test(string $a){
     dd($a);
 }
 */
+/*
+public function recalculerDecompte($userId)
+{
+    // Recharger tous les services de ce surveillant
+    $services = Service::where('user_id', $userId)->get();
+
+    $hte = 0;
+    $hnn = 0;
+    $hjf = 0;
+    $hnf = 0;
+
+    foreach ($services as $service) {
+        $debut = (int) str_replace('H', '', $service->heure_debut);
+        $fin = (int) str_replace('H', '', $service->heure_fin);
+
+        $duree = $fin - $debut;
+        if ($duree < 0) {
+            $duree += 24;
+        }
+
+        $hte += $duree;
+
+        if ($debut >= 20 || $fin <= 6) {
+            $hnn += $duree;
+        }
+
+        if (in_array(date('N', strtotime($service->date_service)), [6, 7])) {
+            $hjf += $duree;
+            if ($debut >= 20 || $fin <= 6) {
+                $hnf += $duree;
+            }
+        }
+    }
+
+    // Stocke le résultat dans un tableau lié à l'utilisateur
+    $this->decomptes[$userId] = [
+        'hte' => $hte,
+        'hnn' => $hnn,
+        'hjf' => $hjf,
+        'hnf' => $hnf,
+    ];
+}*/
+        public function increment(){
+            $this->hte++;
+        }
+
 }

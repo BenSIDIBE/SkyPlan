@@ -72,7 +72,7 @@ class TableauServiceFormComponent extends Component
                 'commandant_permanence' => $this->commandant_permanence,
             ];
 
-
+          //  dd($data);
             $res = TableauService::create([
                 'date_debut' => Carbon::createFromFormat('d/m/Y', $this->semaine),
                 'date_fin' => Carbon::createFromFormat('d/m/Y', $this->semaine)->addDays(6),

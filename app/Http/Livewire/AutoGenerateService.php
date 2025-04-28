@@ -11,9 +11,18 @@ class AutoGenerateService extends Component
 {
     public $date_debut;
     public $date_fin;
-
+    public $jours;
+    public $surveillants;
+    public $id_tableauService;
     public $services_preview = [];
     public $agents_rest = []; // Liste des agents en repos
+
+    public function mount(Request $request): void
+    {
+        $this->id_tableauService = (int)$request->id_tableauService;
+        $this->tableauService = TableauService::findOrFail($this->id_tableauService);
+    
+    }
 
     public function generate()
     {
@@ -88,6 +97,7 @@ class AutoGenerateService extends Component
         // Enregistrer tous les services en base
         foreach ($this->services_preview as $service) {
             Service::create([
+                'id_tableauService' => $this->id_tableauService,
                 'date_service' => $service['date_service'],
                 'heure_debut' => $service['heure_debut'],
                 'heure_fin' => $service['heure_fin'],

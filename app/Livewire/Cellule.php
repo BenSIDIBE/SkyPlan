@@ -13,6 +13,8 @@ class Cellule extends Component
     public $heure_fin;
     public $id_tableauService;
 
+    public $hte = 0;
+
     public function mount($user_id, $date_service, $heure_debut, $heure_fin, $id_tableauService):void
     {
         $this->id_tableauService = $id_tableauService;
@@ -33,9 +35,13 @@ HTML;
 
     public function create()
     {
+
+       //dd($this->id_user, $this->date_service, $this->heure_debut, $this->heure_fin, $this->id_tableauService);
         $existingRecord = DB::table('services')
             ->where('id_user', $this->id_user)
             ->where('date_service', $this->date_service)
+            ->where( 'heure_debut', $this->heure_debut)
+            ->where('heure_fin', $this->heure_fin)
             ->first();
 
         if ($existingRecord) {
@@ -56,6 +62,9 @@ HTML;
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+            
+           /* $hte = $hte + ($heure_fin - $heure_debut);
+            return $hte;*/
         }
     }
 }

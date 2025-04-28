@@ -21,7 +21,7 @@
             --dark: #000;
             --green: #04af51;
             --light-bleue: #1775F1;
-            --dark-bleu: #0C5FCD;
+            --dark-bleu: #0C5FCD; 
             --red:#f55742;
         }
 
@@ -93,7 +93,7 @@
                 <div class="card u" onclick="window.location='{{ route('services.index') }}'">
                     <div class="head">
                         <div>
-                            <h2>{{ \App\Models\TableauService::count() }}</h2>
+                            <h2>{{ \App\Models\Service::distinct('id_tableau_service')->count('id_tableau_service') }}</h2>
                             <p>Tableau de service</p>
                         </div>
                         <i class="fa-solid fa-building-columns icon"></i>
@@ -258,10 +258,10 @@
                     <td class="font-bold px-1 py-1">BAYALA S. Noel</td>
                     @for ($i = 0; $i < 7; $i++)
                                 <!-- 7 jours -->
-                                <td id="nuit" class="clickable"></td>
-                                <td id="matin" class="clickable"></td>
-                                <td id="matin" class="clickable"></td>
-                                <td id="nuit" class="clickable"></td>
+                                <td id="nuit" ></td>
+                                <td id="matin" ></td>
+                                <td id="matin" ></td>
+                                <td id="nuit"></td>
                     @endfor
                     <td>56</td>
                     <td>21</td>
@@ -294,10 +294,10 @@
                     <td class="font-bold px-1 py-1">ILBOUDO Parfait</td>
                     @for ($i = 0; $i < 7; $i++)
                                 <!-- 7 jours -->
-                                <td id="nuit" class="clickable"></td>
-                                <td id="matin" class="clickable"></td>
-                                <td id="matin" class="clickable"></td>
-                                <td id="nuit" class="clickable"></td>
+                                <td id="nuit" ></td>
+                                <td id="matin" ></td>
+                                <td id="matin" ></td>
+                                <td id="nuit" ></td>
                     @endfor
                     <td>53</td>
                     <td>18</td>
@@ -312,7 +312,7 @@
                     <td class="font-bold px-1 py-1">SOME Jean De Dieu.</td>
                     @for ($i = 0; $i < 7; $i++)
                                 <!-- 7 jours -->
-                                <td id="nuit" class="clickable"></td>
+                                <td id="nuit" ></td>
                                 <td id="matin" class="clickable"></td>
                                 <td id="matin" class="clickable"></td>
                                 <td id="nuit" class="clickable"></td>

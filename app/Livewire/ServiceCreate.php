@@ -17,7 +17,7 @@ class ServiceCreate extends Component
     public $id_tableauService;
    /* protected $listeners = ['serviceAdded' => 'recalculerDecompte'];
     public $decomptes = [];*/
-    public $hte = 5;
+    public $hte = 10;
 
 
 
@@ -102,55 +102,6 @@ public function storeService($userId, $dateService, $heureDebut, $heureFin, $id_
 
 
 
-/*
-public function test(string $a){
-    dd($a);
-}
-*/
-/*
-public function recalculerDecompte($userId)
-{
-    // Recharger tous les services de ce surveillant
-    $services = Service::where('user_id', $userId)->get();
 
-    $hte = 0;
-    $hnn = 0;
-    $hjf = 0;
-    $hnf = 0;
-
-    foreach ($services as $service) {
-        $debut = (int) str_replace('H', '', $service->heure_debut);
-        $fin = (int) str_replace('H', '', $service->heure_fin);
-
-        $duree = $fin - $debut;
-        if ($duree < 0) {
-            $duree += 24;
-        }
-
-        $hte += $duree;
-
-        if ($debut >= 20 || $fin <= 6) {
-            $hnn += $duree;
-        }
-
-        if (in_array(date('N', strtotime($service->date_service)), [6, 7])) {
-            $hjf += $duree;
-            if ($debut >= 20 || $fin <= 6) {
-                $hnf += $duree;
-            }
-        }
-    }
-
-    // Stocke le résultat dans un tableau lié à l'utilisateur
-    $this->decomptes[$userId] = [
-        'hte' => $hte,
-        'hnn' => $hnn,
-        'hjf' => $hjf,
-        'hnf' => $hnf,
-    ];
-}*/
-        public function increment(){
-            $this->hte++;
-        }
 
 }

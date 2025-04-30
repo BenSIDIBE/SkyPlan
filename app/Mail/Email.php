@@ -31,7 +31,7 @@ class Email extends Mailable
     public function build()
     {
         $pdf = Pdf::loadView('emails.test',['variables' => $this->variables])->setPaper('A4', 'landscape');
-
+        
         return $this->subject($this->donnees['title'])
             ->view('pdf.invioice', [
             'message' => $this->donnees['body'] . "\n\nMerci pour votre confiance." // Adding a message to the body with a thank you note

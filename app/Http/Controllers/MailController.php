@@ -65,7 +65,7 @@ class MailController extends Controller
             'Samedi' => $lundi_semaine_suivante->addDay()->format('d-m-Y'),
             'Dimanche' => $lundi_semaine_suivante->addDay()->format('d-m-Y'),
         ];
-       // dd($this->jours['Dimanche']);
+        //dd($this->jours['Lundi']);
         $posteSurveillanceId = Poste::where('nom', 'Technicien de surveillance')->value('id');
         $posteMaintenanceId = Poste::where('nom', 'Technicien de maintenance')->value('id');
 
@@ -88,6 +88,7 @@ class MailController extends Controller
             'techniciens_maintenance' => $techniciens_maintenance,
             'services' => $Services,
             'jours' => $this->jours,
+            
         ];
 
         $Data = [

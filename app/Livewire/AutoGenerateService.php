@@ -1,11 +1,30 @@
 <?php
+/*
+namespace App\Livewire;
 
-namespace App\Http\Livewire;
+use Livewire\Component;
+
+class AutoGenerateService extends Component
+{
+    public function render()
+    {
+        return view('livewire.auto-generate-service');
+    }
+}
+*/
+namespace App\Livewire;
+
+
 
 use Livewire\Component;
 use App\Models\User;
 use App\Models\Service;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use App\Models\TableauService;
+use Illuminate\Support\Facades\DB;
+use App\Models\Poste;
+
 
 class AutoGenerateService extends Component
 {

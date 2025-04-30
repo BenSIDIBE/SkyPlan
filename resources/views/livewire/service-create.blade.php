@@ -69,6 +69,8 @@
                                 <td class="font-bold px-4 py-2">{{ $user->name }}</td>
 
                                 @foreach ($jours as $jour => $date)
+                            
+
                                     <td class="clickable cell"
                                         data-user-id="{{ $user->id }}"
                                         data-date="{{ $date }}"
@@ -77,7 +79,7 @@
                                         data-id-tableau-service="{{ $id_tableauService }}"
                                         data-type="hnn"> {{-- nuit --}}
 
-                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '00H', 'heure_fin' => '06H', 'id_tableauService' =>  $tableauService->id], key($user->id . $date . '00H-06H'))
+                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '00H', 'heure_fin' => '06H', 'id_tableauService' =>  $tableauService->id],  key($user->id . $date . '00H-06H'))
                                     </td>
                                     <td class="clickable cell"
                                         data-user-id="{{ $user->id }}"
@@ -88,7 +90,7 @@
                                         
                                         >
                                      
-                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '06H', 'heure_fin' => '13H', 'id_tableauService' =>  $tableauService->id], key($user->id . $date . '06H-13H'))
+                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '06H', 'heure_fin' => '13H', 'id_tableauService' =>  $tableauService->id],  key($user->id . $date . '06H-13H'))
                                     </td>
                                     <td class="clickable cell"
                                         data-user-id="{{ $user->id }}"
@@ -96,7 +98,7 @@
                                         data-heure-debut="13H"
                                         data-heure-fin="20H"
                                         data-id-tableau-service="{{ $id_tableauService }}">
-                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '13H', 'heure_fin' => '20H', 'id_tableauService' =>  $tableauService->id], key($user->id . $date . '13H-20H'))
+                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '13H', 'heure_fin' => '20H', 'id_tableauService' =>  $tableauService->id],  key($user->id . $date . '13H-20H'))
                                     </td>
                                     <td class="clickable cell"
                                         data-user-id="{{ $user->id }}"
@@ -106,8 +108,7 @@
                                         data-id-tableau-service="{{ $id_tableauService }}"
                                         data-type="hnn"
                                         >
-                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '20H', 'heure_fin' => '24H', 'id_tableauService' =>  $tableauService->id], key($user->id . $date . '20H-24H'))
-  
+                                        @livewire('cellule', ['user_id' => $user->id, 'date_service' => $date, 'heure_debut' => '20H', 'heure_fin' => '24H', 'id_tableauService' =>  $tableauService->id],   key($user->id . $date . '20H-24H'))
                                     </td>
                                         @endforeach
 
@@ -125,42 +126,10 @@
         <div class="text-end"><a href="{{ route('mail', ['id_tableauService' => $tableauService->id]) }}" class="btn btn-primary"> Enregistre </a> </div>
 
 
-        <!-- Script JavaScript pour la coloration et l'ajout de "X" -->
-        <!-- <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const cells = document.querySelectorAll(".clickable");
-
-                cells.forEach(cell => {
-                    cell.addEventListener("click", function(e) {
-                        // Toggle la couleur de fond et ajoute "X" dans la cellule
-                        e.preventDefault();
-                        if (this.classList.contains("active")) {
-                            this.classList.remove("active");
-                            this.innerHTML = ''; // Enlève le "X"
-                        } else {
-                            this.classList.add("active");
-                            this.innerHTML = '<span class="text-black">X</span>'; // Ajoute le "X" noir
-                        }
-                    });
-                });
-            });
-
-            funtion increment(){
-
-            }
-        </script> -->
         
         <script>
-                document.addEventListener("DOMContentLoaded", function () {
+                            document.addEventListener("DOMContentLoaded", function () {
                     const cells = document.querySelectorAll(".clickable");
-
-                    // const heureMap = {
-                    //     "00H": 0,
-                    //     "06H": 6,
-                    //     "13H": 13,
-                    //     "20H": 20,
-                    //     "24H": 24
-                    // };
 
                     // Transformer "YYYY-MM-DD" → "DD/MM/YYYY"
                     function formatDateFr(isoDate) {
@@ -170,25 +139,20 @@
 
                     const joursFeries = @json($tableauService->data['jour_ferie'] ?? []);
                     
-
                     cells.forEach(cell => {
                         cell.addEventListener("click", function (e) {
                             e.preventDefault();
 
                             const userId = this.dataset.userId;
                             const rawDate = this.dataset.date;
-                            const date = formatDateFr(rawDate); // maintenant "DD/MM/YYYY"
+                            const date = formatDateFr(rawDate); // formatage de la date
                             const isFerie = joursFeries.includes(date);
                             const debut = this.dataset.heureDebut;
                             const fin = this.dataset.heureFin;
 
-                            
-                            console.log(isFerie);
-                            
-                            
-
                             let hte = 0, hnn = 0, hjf = 0, hnf = 0;
 
+                            // Calcul des heures
                             if (debut === "00H" && fin === "06H") {
                                 hte = 6;
                                 if (isFerie) hnf = 6;
@@ -205,12 +169,14 @@
                                 else hnn = 3;
                             }
 
-                            // Définir signe : + si activation, - si désactivation
+                            // Gestion de l'activation/désactivation de la cellule
                             const factor = this.classList.contains("active") ? -1 : 1;
 
+                            // Activation de la cellule
                             this.classList.toggle("active");
                             this.innerHTML = this.classList.contains("active") ? '<span class="text-black">X</span>' : '';
 
+                            // Mise à jour des heures dans la cellule correspondante
                             updateCount(userId, "hte", factor * hte);
                             updateCount(userId, "hnn", factor * hnn);
                             updateCount(userId, "hjf", factor * hjf);
@@ -218,7 +184,7 @@
                         });
                     });
 
-
+                    // Mise à jour des décomptes
                     function updateCount(userId, type, delta) {
                         const countCell = document.getElementById(`${type}-${userId}`);
                         if (countCell) {
@@ -227,9 +193,10 @@
                         }
                     }
                 });
+
                 </script>
 
-²
+
 
         <style>
             .clickable {

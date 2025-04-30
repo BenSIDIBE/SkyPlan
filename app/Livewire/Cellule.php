@@ -13,7 +13,8 @@ class Cellule extends Component
     public $heure_fin;
     public $id_tableauService;
 
-    public $hte = 0;
+    public $clicked = false;
+
 
     public function mount($user_id, $date_service, $heure_debut, $heure_fin, $id_tableauService):void
     {
@@ -53,6 +54,7 @@ HTML;
                     'updated_at' => now(),
                 ]);
         } else {
+           // dd($this->id_user, $this->date_service, $this->heure_debut, $this->heure_fin, $this->id_tableauService);
             DB::table('services')->insert([
                 'id_tableauService' => $this->id_tableauService,
                 'id_user' => $this->id_user,
@@ -62,9 +64,9 @@ HTML;
                 'created_at' => now(),
                 'updated_at' => now(),
             ]);
+            $this->clicked = true;
             
-           /* $hte = $hte + ($heure_fin - $heure_debut);
-            return $hte;*/
+          
         }
     }
 }

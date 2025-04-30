@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Livewire\AutoGenerateService;
 use Livewire\Livewire;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -82,6 +81,7 @@ Route::post('/services', [ServiceController::class, 'store'])->name('services.st
 Route::delete('/services/{serviceId}', [ServiceController::class, 'destroy'])->name('services.destroy');
 
 
+use App\Livewire\AutoGenerateService;
 Route::get('/auto-generate-service', AutoGenerateService::class)->name('auto-generate-service');
 
 

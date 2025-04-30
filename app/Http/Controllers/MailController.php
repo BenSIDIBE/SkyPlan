@@ -108,7 +108,7 @@ class MailController extends Controller
         foreach ($users as $user) {
             Mail::to($user->email)->send(new Email($Data));
         }*/
-        Mail::to('bencompteweb@gmail.com')->send(new Email($Data, $variables));
+       // Mail::to('bencompteweb@gmail.com')->send(new Email($Data, $variables));
 
 
        /* $mailData= [

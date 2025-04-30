@@ -8,6 +8,7 @@ use App\Models\Poste;
 use App\Models\TableauDeService;
 /*juste pour la capture */
 use Illuminate\Http\Request;
+use App\Models\Service;
 
 class DashboardController extends Controller
 {
@@ -16,6 +17,7 @@ class DashboardController extends Controller
         // Récupérer le nombre total d'utilisateurs et de postes
         $Users = User::all();  // Récupère tous les utilisateurs
         $Postes = Poste::all();  // Récupère tous les postes
+        $Services = Service::all();  // Récupère tous les services
 
 /* juste pour la capture */
         $tableauxDeService = TableauDeService::all();
@@ -45,6 +47,6 @@ class DashboardController extends Controller
 
 
         // Passer les données à la vue
-        return view('dashboard', compact('Users', 'Postes', 'tableauxDeService', 'surveillants', 'maintenances'));
+        return view('dashboard', compact('Users', 'Postes', 'tableauxDeService', 'surveillants', 'maintenances','Services'));
     }
 }

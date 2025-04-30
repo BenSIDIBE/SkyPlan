@@ -51,7 +51,11 @@ class TableauServiceController extends Controller
 
                 // Vérifier si la semaine est complète (28 services)
                 if ($servicesSemaine->count() === 28) {
-                    continue; // Ne pas ajouter cette semaine
+                    $dateDebut = Carbon::now()->addWeeks($i)->startOfWeek();
+                    $dateFin = $dateDebut->copy()->endOfWeek();
+                    $semaines[$dateDebut->format('d/m/Y')] = "Du " . $dateDebut->format('d/m/Y') . " au " . $dateFin->format('d/m/Y');
+                    //continue; // Ne pas ajouter cette semaine
+
                 }
                     
                 // Supprimer les services et tableaux de service de la semaine
@@ -118,11 +122,11 @@ class TableauServiceController extends Controller
                         "travailleur_disponible" => [1, 2, 3, 5, 7]
                     ],
                 ];
-                dd($da);
+                //dd($da);
 
                 // Créer un tableau de service basé sur la semaine sélectionnée
                 TableauService::create([
-                    'date_debut' => Carbon::parse($request->input('semaine'))->startOfWeek(),
+                    'date_debut' => Carbon::createFromFormat('d/m/Y', $request->input('semaine'))->startOfWeek(),
                     'date_fin' => Carbon::parse($request->input('semaine'))->endOfWeek(),
                     'jour_ferie' => $request->input('jour_ferie', []),
                 ]);
